@@ -5,9 +5,14 @@
   "repository": "https://github.com/MagicMike90/PWA-example.git",
   "author": "(MagicMike90)",
   "license": "MIT",
+  "scripts": {
+    "build": "node_modules/.bin/webpack",
+    "start": "node_modules/.bin/webpack-dev-server"
+  },
   "dependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "webpack": "^4.27.1"
+    "webpack": "^4.27.1",
+    "webpack-dev-server": "^3.1.10"
   }
 }
