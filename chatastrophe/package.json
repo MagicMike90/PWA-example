@@ -6,7 +6,7 @@
   "author": "(MagicMike90)",
   "license": "MIT",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --config webpack.config.prod.js",
     "start": "webpack-dev-server --hotOnly"
   },
   "dependencies": {
