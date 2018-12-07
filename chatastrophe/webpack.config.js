@@ -1,26 +1,33 @@
+const webpack = require("webpack");
+
 module.exports = {
-    entry: __dirname + "/src/index.js",
-    output: {
-     path: __dirname + "/public",
-     filename: "bundle.js",
-     publicPath: "/"
-    },
-    module: {
-      loaders: [
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader',
-          query: {
-            presets: ['es2015','react'],
-            plugins: ['transform-class-properties']
+  mode: "development",
+  entry: __dirname + "/src/index.js",
+  output: {
+    path: __dirname + "/public",
+    filename: "bundle.js",
+    publicPath: "/"
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+            plugins: ["@babel/plugin-proposal-class-properties"]
           }
-        },
-      ]
-    },
-    devServer: {
-      contentBase: "./public",
-      historyApiFallback: true,
-      inline: true,
-    }
-}
+        }
+      }
+    ]
+  },
+  plugins: [new webpack.HotModuleReplacementPlugin()],
+  devServer: {
+    contentBase: "./public",
+    historyApiFallback: true,
+    inline: true,
+    hot: true
+  }
+};
