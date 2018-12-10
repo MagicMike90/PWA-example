@@ -6,8 +6,9 @@
   "author": "(MagicMike90)",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --config webpack.config.prod.js",
-    "start": "webpack-dev-server"
+    "build": "node scripts/copy_assets.js && webpack --config webpack.config.prod.js",
+    "start": "webpack-dev-server",
+    "deploy": "npm run build && firebase deploy"
   },
   "dependencies": {
     "fs-extra": "^7.0.1",
