@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --config webpack.config.prod.js",
-    "start": "webpack-dev-server --hotOnly"
+    "start": "webpack-dev-server --hot-only"
   },
   "dependencies": {
     "fs-extra": "^7.0.1",

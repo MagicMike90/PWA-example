@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import LoginContainer from "./LoginContainer";
 import "./App.css";
 
