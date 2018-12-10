@@ -6,6 +6,21 @@
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
   </head>
   <body>
+    <script src="/secrets.js"></script>
     <div id="root"></div>
+
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: window.apiKey,
+        authDomain: "chatastrophe-648bc.firebaseapp.com",
+        databaseURL: "https://chatastrophe-648bc.firebaseio.com",
+        projectId: "chatastrophe-648bc",
+        storageBucket: "chatastrophe-648bc.appspot.com",
+        messagingSenderId: window.messagingSenderId
+      };
+      window.firebase = firebase;
+      firebase.initializeApp(config);
+    </script>
   </body>
 </html>
