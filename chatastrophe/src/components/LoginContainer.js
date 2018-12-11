@@ -14,8 +14,40 @@ class LoginContainer extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state);
+    if (this.state.email && this.state.password) {
+      this.login();
+    } else {
+      this.setState({ error: "Please fill in both fields." });
+    }
   };
+  login() {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        if (error.code === "auth/user-not-found") {
+          this.signup();
+        } else {
+          this.setState({ error: "Error logging in." });
+        }
+      });
+  }
+
+  signup() {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({ error: "Error signing up." });
+      });
+  }
 
   render() {
     return (
@@ -35,6 +67,7 @@ class LoginContainer extends Component {
             value={this.state.password}
             placeholder="Your password"
           />
+          <p className="error">{this.state.error}</p>
           <button className="red light" type="submit">
             Login
           </button>
