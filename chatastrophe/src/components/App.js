@@ -17,7 +17,22 @@ class App extends Component {
         this.props.history.push("/login");
       }
     });
+
+    firebase
+      .database()
+      .ref("/messages")
+      .once("value", snapshot => {
+        this.onMessage(snapshot);
+      });
   }
+  onMessage = snapshot => {
+    const messages = Object.keys(snapshot.val()).map(key => {
+      const msg = snapshot.val()[key];
+      msg.id = key;
+      return msg;
+    });
+    console.log(messages);
+  };
 
   handleSubmitMessage = msg => {
     // Send to database
@@ -40,7 +55,12 @@ class App extends Component {
         <Route
           exact
           path="/"
-          render={() => <ChatContainer onSubmit={this.handleSubmitMessage} />}
+          render={() => (
+            <ChatContainer
+              onSubmit={this.handleSubmitMessage}
+              messages={this.state.messages}
+            />
+          )}
         />
         <Route path="/users/:id" component={UserContainer} />
       </div>
