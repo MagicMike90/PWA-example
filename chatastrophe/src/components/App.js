@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Route, withRouter } from "react-router-dom";
 import LoginContainer from "./LoginContainer";
 import ChatContainer from "./ChatContainer";
+import UserContainer from "./UserContainer";
+
 import "./App.css";
 
 class App extends Component {
@@ -15,11 +17,21 @@ class App extends Component {
       }
     });
   }
+
+  handleSubmitMessage = msg => {
+    // Send to database
+    console.log(msg);
+  };
+
   render() {
     return (
       <div id="container">
         <Route path="/login" component={LoginContainer} />
-        <Route exact path="/" component={ChatContainer} />
+        <Route
+          exact
+          path="/"
+          render={() => <ChatContainer onSubmit={this.handleSubmitMessage} />}
+        />
         <Route path="/users/:id" component={UserContainer} />
       </div>
     );

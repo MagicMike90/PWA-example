@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import Header from './Header';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import Header from "./Header";
 
 export default class UserContainer extends Component {
   render() {
@@ -8,9 +8,7 @@ export default class UserContainer extends Component {
       <div id="UserContainer">
         <Header>
           <Link to="/">
-            <button className="red">
-              Back To Chat
-            </button>
+            <button className="red">Back To Chat</button>
           </Link>
         </Header>
         <h1>Hello from UserContainer for User {this.props.match.params.id}</h1>
