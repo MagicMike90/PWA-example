@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import LoginContainer from "./LoginContainer";
 import ChatContainer from "./ChatContainer";
 import "./App.css";
@@ -20,8 +20,9 @@ class App extends Component {
       <div id="container">
         <Route path="/login" component={LoginContainer} />
         <Route exact path="/" component={ChatContainer} />
+        <Route path="/users/:id" component={UserContainer} />
       </div>
     );
   }
 }
-export default App;
+export default withRouter(App);
