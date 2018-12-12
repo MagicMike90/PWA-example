@@ -31,7 +31,7 @@ class App extends Component {
       msg.id = key;
       return msg;
     });
-    console.log(messages);
+    this.setState({ messages });
   };
 
   handleSubmitMessage = msg => {
