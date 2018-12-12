@@ -25,6 +25,16 @@ export default class ChatContainer extends Component {
     }
   };
 
+  getAuthor = (msg, nextMsg) => {
+    if (!nextMsg || nextMsg.author !== msg.author) {
+      return (
+        <p className="author">
+          <Link to={`/users/${msg.user_id}`}>{msg.author}</Link>
+        </p>
+      );
+    }
+  };
+
   render() {
     return (
       <div id="ChatContainer" className="inner-container">
@@ -34,16 +44,14 @@ export default class ChatContainer extends Component {
           </button>
         </Header>
         <div id="message-container">
-          {this.props.messages.map(msg => (
+          {this.props.messages.map((msg, i) => (
             <div
               key={msg.id}
               className={`message ${this.props.user.email === msg.author &&
                 "mine"}`}
             >
               <p>{msg.msg}</p>
-              <p className="author">
-                <Link to={`/users/${msg.user_id}`}>{msg.author}</Link>
-              </p>
+              {this.getAuthor(msg, this.props.messages[i + 1])}
             </div>
           ))}
         </div>
