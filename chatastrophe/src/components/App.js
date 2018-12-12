@@ -7,7 +7,8 @@ import UserContainer from "./UserContainer";
 import "./App.css";
 
 class App extends Component {
-  state = { user: null };
+  state = { user: null, messages: [] };
+
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -20,7 +21,16 @@ class App extends Component {
 
   handleSubmitMessage = msg => {
     // Send to database
-    console.log(msg);
+    const data = {
+      msg,
+      author: this.state.user.email,
+      user_id: this.state.user.uid,
+      timestamp: Date.now()
+    };
+    firebase
+      .database()
+      .ref("messages/")
+      .push(data);
   };
 
   render() {
