@@ -23,6 +23,9 @@ class App extends Component {
       .ref("/messages")
       .once("value", snapshot => {
         this.onMessage(snapshot);
+        if (!this.state.messagesLoaded) {
+          this.setState({ messagesLoaded: true });
+        }
       });
   }
   onMessage = snapshot => {
@@ -57,6 +60,7 @@ class App extends Component {
           path="/"
           render={() => (
             <ChatContainer
+              messagesLoaded={this.state.messagesLoaded}
               onSubmit={this.handleSubmitMessage}
               user={this.state.user}
               messages={this.state.messages}
