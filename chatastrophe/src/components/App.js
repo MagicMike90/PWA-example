@@ -11,6 +11,10 @@ class App extends Component {
   state = { user: null, messages: [] };
 
   componentDidMount() {
+    this.notifications = new NotificationResource(
+      firebase.messaging(),
+      firebase.database()
+    );
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
@@ -21,20 +25,21 @@ class App extends Component {
       }
     });
 
+    this.listenForMessages();
+  }
+
+  listenForMessages = () => {
     firebase
       .database()
       .ref("/messages")
-      .once("value", snapshot => {
+      .on("value", snapshot => {
         this.onMessage(snapshot);
         if (!this.state.messagesLoaded) {
           this.setState({ messagesLoaded: true });
         }
       });
-    this.notifications = new NotificationResource(
-      firebase.messaging(),
-      firebase.database()
-    );
-  }
+  };
+
   onMessage = snapshot => {
     const messages = Object.keys(snapshot.val()).map(key => {
       const msg = snapshot.val()[key];

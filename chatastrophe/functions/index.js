@@ -22,6 +22,7 @@ exports.sendNotifications = functions.database
       .ref("fcmTokens")
       .once("value")
       .then(allTokens => {
+        // Find all token and compoare to user id, find other users
         if (allTokens.val()) {
           const tokens = [];
           for (let fcmTokenKey in allTokens.val()) {
@@ -30,6 +31,8 @@ exports.sendNotifications = functions.database
               tokens.push(fcmToken.token);
             }
           }
+
+          // Send the notification to every device
           if (tokens.length > 0) {
             return admin
               .messaging()
@@ -62,5 +65,6 @@ exports.sendNotifications = functions.database
               });
           }
         }
+        return null;
       });
   });
