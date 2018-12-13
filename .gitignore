@@ -1,4 +1,3 @@
 node_modules
 build
 /chatastrophe/public/secrets.js
-/chatastrophe/public/firebase-messaging-sw.js

@@ -28,8 +28,10 @@ class App extends Component {
           this.setState({ messagesLoaded: true });
         }
       });
-
-    this.notifications = new NotificationResource(firebase.messaging());
+    this.notifications = new NotificationResource(
+      firebase.messaging(),
+      firebase.database()
+    );
   }
   onMessage = snapshot => {
     const messages = Object.keys(snapshot.val()).map(key => {
