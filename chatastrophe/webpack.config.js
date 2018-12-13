@@ -39,6 +39,7 @@ module.exports = {
     contentBase: "./public",
     historyApiFallback: true,
     inline: true,
+    open: true,
     hot: true
   },
   devtool: "eval-source-map"
