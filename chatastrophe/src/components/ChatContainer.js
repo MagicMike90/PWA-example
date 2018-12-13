@@ -60,7 +60,7 @@ export default class ChatContainer extends Component {
             Logout
           </button>
         </Header>
-        {this.props.messagesLoaded ? (
+        {this.props.messagesLoaded && this.props.user ? (
           <div
             id="message-container"
             ref={element => {
