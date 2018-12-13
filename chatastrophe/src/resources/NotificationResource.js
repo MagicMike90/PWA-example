@@ -23,6 +23,12 @@ export default class NotificationResource {
       this.tokensLoaded = true;
     });
   }
+  setupTokenRefresh() {
+    this.messaging.onTokenRefresh(() => {
+      this.saveTokenToServer();
+    });
+  }
+
   saveTokenToServer() {
     this.messaging.getToken().then(res => {
       if (this.tokensLoaded) {
@@ -31,10 +37,22 @@ export default class NotificationResource {
           // Replace existing toke
         } else {
           // Create a new one
+          this.registerToken(res);
         }
       }
     });
   }
+
+  registerToken(token) {
+    firebase
+      .database()
+      .ref("fcmTokens/")
+      .push({
+        token: token,
+        user_id: this.user.uid
+      });
+  }
+
   findExistingToken(tokenToSave) {
     for (let tokenKey in this.allTokens) {
       const token = this.allTokens[tokenKey].token;
@@ -43,5 +61,23 @@ export default class NotificationResource {
       }
     }
     return false;
+  }
+
+  saveTokenToServer() {
+    this.messaging.getToken().then(res => {
+      if (this.tokensLoaded) {
+        const existingToken = this.findExistingToken(res);
+        if (existingToken) {
+          console.log(existingToken);
+        } else {
+          this.registerToken(res);
+        }
+      }
+    });
+  }
+
+  changeUser(user) {
+    this.user = user;
+    this.saveTokenToServer();
   }
 }
