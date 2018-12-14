@@ -16,7 +16,6 @@ class App extends Component {
       firebase.database()
     );
     firebase.auth().onAuthStateChanged(user => {
-      console.log("user", user);
       if (user) {
         this.setState({ user });
         this.listenForMessages();
