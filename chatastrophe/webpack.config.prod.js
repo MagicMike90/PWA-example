@@ -25,7 +25,10 @@ module.exports = {
               "@babel/preset-react",
               "@babel/preset-stage-2"
             ],
-            plugins: ["@babel/plugin-proposal-class-properties"]
+            plugins: [
+              "@babel/plugin-proposal-class-properties",
+              "@babel/plugin-syntax-dynamic-import"
+            ]
           }
         }
       },
