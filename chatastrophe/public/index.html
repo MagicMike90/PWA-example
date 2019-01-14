@@ -38,7 +38,6 @@
             .then(
               function(registration) {
                 // Registration was successful
-                // Registration was successful
                 console.log("Registered!");
               },
               function(err) {
@@ -53,6 +52,17 @@
       } else {
         console.log("service worker is not supported");
       }
+    </script>
+
+    <script>
+      let deferredPrompt;
+
+      window.addEventListener("beforeinstallprompt", function(event) {
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+      });
     </script>
   </body>
 </html>
