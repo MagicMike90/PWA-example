@@ -40,6 +40,11 @@ class App extends Component {
 
     this.listenForMessages();
     this.listenForInstallBanner();
+
+    // Tigger other loading process
+    loadChat();
+    loadLogin();
+    loadUser();
   }
 
   listenForMessages = () => {

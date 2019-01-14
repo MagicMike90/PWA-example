@@ -20,11 +20,7 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [
-              "@babel/preset-env",
-              "@babel/preset-react",
-              "@babel/preset-stage-2"
-            ],
+            presets: ["@babel/preset-env", "@babel/preset-react"],
             plugins: [
               "@babel/plugin-proposal-class-properties",
               "@babel/plugin-syntax-dynamic-import"
