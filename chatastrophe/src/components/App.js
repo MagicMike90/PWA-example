@@ -1,11 +1,24 @@
 import React, { Component } from "react";
 import { Route, withRouter } from "react-router-dom";
-import LoginContainer from "./LoginContainer";
-import ChatContainer from "./ChatContainer";
-import UserContainer from "./UserContainer";
+import AsyncComponent from "./AsyncComponent";
 import NotificationResource from "../resources/NotificationResource";
-
 import "./App.css";
+
+const loadLogin = () => {
+  return import("./LoginContainer").then(module => module.default);
+};
+
+const loadChat = () => {
+  return import("./ChatContainer").then(module => module.default);
+};
+
+const loadUser = () => {
+  return import("./UserContainer").then(module => module.default);
+};
+
+const LoginContainer = AsyncComponent(loadLogin);
+const UserContainer = AsyncComponent(loadUser);
+const ChatContainer = AsyncComponent(loadChat);
 
 class App extends Component {
   state = { user: null, messages: [] };
@@ -16,7 +29,6 @@ class App extends Component {
       firebase.database()
     );
     firebase.auth().onAuthStateChanged(user => {
-      console.log("user", user);
       if (user) {
         this.setState({ user });
         this.listenForMessages();
@@ -27,6 +39,12 @@ class App extends Component {
     });
 
     this.listenForMessages();
+    this.listenForInstallBanner();
+
+    // Tigger other loading process
+    loadChat();
+    loadLogin();
+    loadUser();
   }
 
   listenForMessages = () => {
@@ -39,6 +57,15 @@ class App extends Component {
           this.setState({ messagesLoaded: true });
         }
       });
+  };
+
+  listenForInstallBanner = () => {
+    window.addEventListener("beforeinstallprompt", e => {
+      console.log("beforeinstallprompt Event fired");
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      this.deferredPrompt = e;
+    });
   };
 
   onMessage = snapshot => {
@@ -62,6 +89,14 @@ class App extends Component {
       .database()
       .ref("messages/")
       .push(data);
+
+    if (this.deferredPrompt) {
+      this.deferredPrompt.prompt();
+      this.deferredPrompt.userChoice.then(choice => {
+        console.log(choice);
+      });
+      this.deferredPrompt = null;
+    }
   };
 
   render() {

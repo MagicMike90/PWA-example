@@ -8,7 +8,8 @@ module.exports = {
   entry: __dirname + "/src/index.js",
   output: {
     path: __dirname + "/build",
-    filename: "bundle.js",
+    filename: "static/js/[name].[hash:8].js",
+    chunkFilename: "static/js/[name].[hash:8].chunk.js",
     publicPath: "./"
   },
   module: {
@@ -20,7 +21,10 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env", "@babel/preset-react"],
-            plugins: ["@babel/plugin-proposal-class-properties"]
+            plugins: [
+              "@babel/plugin-proposal-class-properties",
+              "@babel/plugin-syntax-dynamic-import"
+            ]
           }
         }
       },
